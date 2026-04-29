@@ -1,9 +1,7 @@
 # Created by https://www.toptal.com/developers/gitignore/api/c,visualstudiocode,windows
 # Edit at https://www.toptal.com/developers/gitignore?templates=c,visualstudiocode,windows
 
-ignorar.txt
-codigos_de_ejemplo/
-
+.vscode/
 
 ### C ###
 # Prerequisites
