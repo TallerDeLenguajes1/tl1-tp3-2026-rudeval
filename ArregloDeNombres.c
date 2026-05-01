@@ -2,25 +2,30 @@
 #include <stdlib.h>
 #include <string.h>
 
+void MostrarPersonas(char *nombres[]);
+
 int main (){
 
     char buff[50];
-    char * Cadena[5]; 
+    char * nombres[5]; //arreglo de punteros a cada espacio de memoria dinamica
 
-    for (int i = 0; i < 6; i++)
+    for (int i = 0; i < 5; i++)
     {
-        printf("Ingrese nombre %d", i +1);
-        scanf("%s", buff);
-        int tamanioDeCadenaIngresadaPorUsuario = strlen(buff); // no considera el caracter nulo por lo tanto devuelve 10
+        printf("\nIngrese nombre %d: ", i +1);
+            scanf("%s", buff);
+        int tama = strlen(buff); // no considera el caracter nulo por lo tanto devuelve 10
    
-        Cadena[i] = (char *) malloc (sizeof(char) * tamanioDeCadenaIngresadaPorUsuario + 1); // Reserva de memoria para la cadena pero aumento 1 byte para el carcter nulo
-        strcpy(Cadena[i], buff); 
+        nombres[i] = (char *) malloc (sizeof(char) * tama + 1); // Reserva de memoria para la cadena pero aumento 1 byte para el carcter nulo
+        strcpy(nombres[i], buff); 
     }
-    
-     
-    printf("%s",Cadena);
-    
-    getchar(); //?  
+
+    MostrarPersonas(nombres);
 
     return 0;
+}
+
+void MostrarPersonas(char *nombres[]){
+    for (int i = 0; i < 5; i++){
+        printf("\n%s",nombres[i]);
+    }
 }
