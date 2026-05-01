@@ -3,6 +3,7 @@
 #include <string.h>
 
 void MostrarPersonas(char *nombres[]);
+void BuscarNombre (int id, char *nombres[]);
 
 int main (){
 
@@ -21,6 +22,12 @@ int main (){
 
     MostrarPersonas(nombres);
 
+    //Buscar nombre
+    int id;
+    printf("\nIngrese ID (1 al 5): ");
+        scanf("%d", &id);
+    BuscarNombre(id, nombres);
+        
     return 0;
 }
 
@@ -29,3 +36,15 @@ void MostrarPersonas(char *nombres[]){
         printf("\n%s",nombres[i]);
     }
 }
+
+void BuscarNombre (int id, char *nombres[]){
+    if (id>=1 && id<=5)
+    {
+        id = id-1;
+        printf("\n\tNombre encontrado: %s", nombres[id]); 
+    }else{
+        printf("\nNo se encontro el valor buscado"); 
+    }
+    
+}
+
