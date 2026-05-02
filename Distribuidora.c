@@ -21,6 +21,9 @@ typedef struct {
 
 tCliente * crearCliente(int n);
 void cargarClientes(tCliente*clientes, int n);
+float costoTotalDeUnProducto(tProducto *producto);
+void mostrarClientesYTotal(tCliente*clientes, int n);
+
 
 int main(){
     srand(time(NULL));
@@ -32,6 +35,16 @@ int main(){
     tCliente * clientes = crearCliente(cantidadClientes);
 
     cargarClientes(clientes, cantidadClientes);
+    mostrarClientesYTotal(clientes, cantidadClientes);
+
+    for (int i = 0; i < cantidadClientes; i++)
+    {
+        free(clientes[i].NombreCliente);
+        free(clientes[i].Productos);
+    }
+    
+    free(clientes);
+
     
 
     return 0;
@@ -57,16 +70,52 @@ void cargarClientes(tCliente*clientes, int n){
         for (int j = 0; j < clientes[i].CantidadProductosAPedir; j++)
         {
             clientes[i].Productos[j].ProductoID=j+1;
-            
+
             clientes[i].Productos[j].Cantidad=rand()%10+1;
 
             int random=rand()%5; //5 elementos del arreglo (0 al 4)
             clientes[i].Productos[j].TipoProducto = TiposProductos[random];
 
-            clientes[i].Productos[j].PrecioUnitario=rand()%(91)+10; //entre 10 y 100
+            clientes[i].Productos[j].PrecioUnitario=(float)(rand()%9101 + 1000) / 100; //entre 10 y 100 con 2 decimales
 
         }
 
     }
 
+}
+
+float costoTotalDeUnProducto(tProducto *producto){
+    float costoTotal=producto->PrecioUnitario * producto->Cantidad;
+    return costoTotal;
+}
+
+void mostrarClientesYTotal(tCliente*clientes, int n){
+    
+    for (int i = 0; i < n; i++)
+    {
+        float totalPorCliente = 0;
+        printf("\nCliente [%d]: ", i+1);
+        printf("\n\tNombre: %s", clientes[i].NombreCliente);
+        printf("\n\tCantidad de productos a pedir: %d", clientes[i].CantidadProductosAPedir);
+        printf("\n\tProductos: ");
+            for (int j = 0; j < clientes[i].CantidadProductosAPedir; j++)
+            {
+                printf("\n\t\tID: %d", clientes[i].Productos[j].ProductoID);
+                printf("\n\t\tCantidad: %d", clientes[i].Productos[j].Cantidad);
+                printf("\n\t\tTipo: %s", clientes[i].Productos[j].TipoProducto);
+                printf("\n\t\tPrecio unitario: $%.2f", clientes[i].Productos[j].PrecioUnitario);
+
+                float costoTotal = costoTotalDeUnProducto(&clientes[i].Productos[j]); //pasamos direccion de la estructura tProducto
+                printf("\n\t\tPrecio total: $%.2f", costoTotal);
+                printf("\n");
+
+                totalPorCliente += costoTotal;
+
+            }
+
+        printf("\n\tTotal a pagar de cliente[%d]: $%.2f", clientes[i].ClienteID, totalPorCliente);
+            
+
+    }
+    
 }
