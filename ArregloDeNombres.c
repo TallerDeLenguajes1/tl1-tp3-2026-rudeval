@@ -23,25 +23,57 @@ int main (){
 
     MostrarPersonas(nombres);
 
-    //Buscar nombre por id
-    int id;
-    printf("\nIngrese ID (1 al 5): ");
-        scanf("%d", &id);
-    BuscarNombre(id, nombres);
-        
-    //nombre por clave
+    //------Menu-----
+    int seleccion, id;
     char clave[25];
-    printf("\nIngrese palabra clave: ");
-        scanf("%s", clave);
-    int encontrado = BuscarNombre(clave,nombres);
-    if (encontrado != -1)
+    do
     {
-        printf("\n\tNombre encontrado: %s", nombres[encontrado]);
-    }else{
-        printf("\n\tNo se encontro ningun nombre");
-    }
+        printf("\n-----MENU-----");
+        printf("\n1. Buscar nombre por ID");
+        printf("\n2. Buscar nombre por Clave");
+        printf("\n0. Salir");
+        printf("\n\tSeleccion: ");
+            scanf("%d", &seleccion);
+
+        switch (seleccion)
+        {
+        case 0:
+            printf("\nSaliendo del programa...");
+            break;
+
+        case 1:
+            //Buscar nombre por id
+            printf("\nIngrese ID (1 al 5): ");
+                scanf("%d", &id);
+            BuscarNombrePorId(id, nombres);
+        break;
+
+        case 2:
+            //nombre por clave
+            printf("\nIngrese palabra clave: ");
+                scanf("%s", clave);
+            int encontrado = BuscarNombrePorClave(clave,nombres);
+            if (encontrado != -1)
+            {
+                printf("\n\tNombre encontrado: %s", nombres[encontrado]);
+            }else{
+                printf("\n\tNo se encontro ningun nombre");
+            }
+        break;
+        
+        default:
+            printf("\nOpcion invalida");
+            break;
+        }
+
+    } while (seleccion !=0);
 
     //liberar memoria
+    for (int j = 0; j < 5; j++)
+    {
+        free(nombres[j]);
+    }
+    
     return 0;
 }
 
