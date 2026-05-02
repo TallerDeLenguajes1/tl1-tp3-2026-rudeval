@@ -3,7 +3,8 @@
 #include <string.h>
 
 void MostrarPersonas(char *nombres[]);
-int BuscarNombre(char clave[],char *nombres[]);
+void BuscarNombrePorId (int id, char *nombres[]);
+int BuscarNombrePorClave(char clave[],char *nombres[]);
 
 int main (){
 
@@ -22,6 +23,12 @@ int main (){
 
     MostrarPersonas(nombres);
 
+    //Buscar nombre por id
+    int id;
+    printf("\nIngrese ID (1 al 5): ");
+        scanf("%d", &id);
+    BuscarNombre(id, nombres);
+        
     //nombre por clave
     char clave[25];
     printf("\nIngrese palabra clave: ");
@@ -44,7 +51,19 @@ void MostrarPersonas(char *nombres[]){
     }
 }
 
-int BuscarNombre(char clave[],char *nombres[]){
+void BuscarNombrePorId (int id, char *nombres[]){
+    if (id>=1 && id<=5)
+    {
+        id = id-1;
+        printf("\n\tNombre encontrado: %s", nombres[id]); 
+    }else{
+        printf("\nNo se encontro el valor buscado"); 
+    }
+    
+}
+
+
+int BuscarNombrePorClave(char clave[],char *nombres[]){
 
     for (int i = 0; i < 5; i++)
     {
