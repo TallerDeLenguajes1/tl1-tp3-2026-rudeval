@@ -19,48 +19,54 @@ typedef struct {
     tProducto *Productos;   //El tamaño de este arreglo depende de la variable “CantidadProductosAPedir”  
 }tCliente;
 
+tCliente * crearCliente(int n);
+void cargarClientes(tCliente*clientes, int n);
+
 int main(){
     srand(time(NULL));
 
     int cantidadClientes;
+
     printf("\nCantidad de clientes: ");
         scanf("%d", &cantidadClientes);
-    tCliente *clientes = (tCliente *) malloc(sizeof(tCliente)*cantidadClientes); //reservo la memoria para la cantidad de clientes ingresada, y la asigno a un puntero tipo tCliente
+    tCliente * clientes = crearCliente(cantidadClientes);
+
+    cargarClientes(clientes, cantidadClientes);
     
-    for (int i = 0; i < cantidadClientes; i++)
+
+    return 0;
+}
+
+tCliente * crearCliente(int n){
+    tCliente *clientes = (tCliente *) malloc(sizeof(tCliente)*n); //reservo la memoria para la cantidad de clientes ingresada, y la asigno a un puntero tipo tCliente
+    return clientes;
+}
+
+void cargarClientes(tCliente*clientes, int n){
+
+    for (int i = 0; i < n; i++)
     {
         clientes[i].ClienteID=i+1;
 
-        clientes[i].NombreCliente = malloc(25*sizeof(char));
+        clientes[i].NombreCliente = malloc(25*sizeof(char));//reservo 25 caracteres para el nombre, para que el puntero a char apunte al comienzo de la reserva
         printf("Nombre de cliente [%d]: ", i+1);
             scanf("%s", clientes[i].NombreCliente);
-        printf("Nombre de cliente [%d]: %s", i+1, clientes[i].NombreCliente);
 
         clientes[i].CantidadProductosAPedir=rand()%5+1; //5 num del 1 al 5 incluidos
         clientes[i].Productos = (tProducto *)malloc(sizeof(tProducto)*clientes[i].CantidadProductosAPedir);//reservo la memoria para el arreglo de productos
         for (int j = 0; j < clientes[i].CantidadProductosAPedir; j++)
         {
             clientes[i].Productos[j].ProductoID=j+1;
-            printf("\nID: %d", clientes[i].Productos[j].ProductoID);
+            
             clientes[i].Productos[j].Cantidad=rand()%10+1;
+
             int random=rand()%5; //5 elementos del arreglo (0 al 4)
             clientes[i].Productos[j].TipoProducto = TiposProductos[random];
+
             clientes[i].Productos[j].PrecioUnitario=rand()%(91)+10; //entre 10 y 100
 
         }
 
     }
-    
-
-    return 0;
-}
-
-/*tCliente * crearCliente(tCliente*clientes, int n){
 
 }
-
-
-tCliente * cargarClientes(tCliente*clientes, int n){
-
-    return clientes;
-}*/
